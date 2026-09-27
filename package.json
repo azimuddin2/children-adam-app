@@ -1,5 +1,5 @@
 {
-  "name": "intentional-fitness-app",
+  "name": "children-adam-app",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
@@ -8,7 +8,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "lint": "expo lint"
+    "lint": "expo lint",
+    "prettier": "npx prettier --ignore-path .prettierignore --write \"./{app,components,constants,hooks}/**/*.{js,jsx,ts,tsx,json}\""
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
@@ -45,6 +46,7 @@
     "@types/react": "~19.2.4",
     "eslint": "^9.25.0",
     "eslint-config-expo": "~57.0.2",
+    "prettier": "^3.9.9",
     "typescript": "~6.0.3"
   },
   "private": true
