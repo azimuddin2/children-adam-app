@@ -1,7 +1,20 @@
-import { Tabs } from 'expo-router';
+import { selectCurrentToken } from '@/redux/features/auth/authSlice';
+import { useAppSelector } from '@/redux/hooks';
+import { session } from '@/utils/session';
 import { Ionicons } from '@expo/vector-icons';
+import { Redirect, Tabs } from 'expo-router';
 
 export default function TabLayout() {
+  const token = useAppSelector(selectCurrentToken);
+
+  if (!session.onboardingDone) {
+    return <Redirect href="/onboarding" />;
+  }
+
+  if (!token) {
+    return <Redirect href="/login" />;
+  }
+
   return (
     <Tabs
       screenOptions={{
@@ -9,7 +22,7 @@ export default function TabLayout() {
         tabBarInactiveTintColor: '#94A3B8',
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: '#FFFFFF', // 👈 সবসময় সাদা (dark mode-এও)
+          backgroundColor: '#FFFFFF',
           borderTopWidth: 1,
           borderTopColor: '#E5E7EB',
         },

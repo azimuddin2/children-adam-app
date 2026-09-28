@@ -1,3 +1,5 @@
+import { MenuItem } from '@/components/ui/menu-item';
+import { PROFILE_MENU_ITEMS } from '@/constants/profile-menu';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useState } from 'react';
@@ -10,8 +12,6 @@ import {
   View,
 } from 'react-native';
 
-import { MenuItem } from '@/src/components/ui/menu-item';
-import { PROFILE_MENU_ITEMS } from '@/src/constants/profile-menu';
 // import { useAuth } from '@/hooks/use-auth';
 
 // TODO: real user data backend/context থেকে আসবে
