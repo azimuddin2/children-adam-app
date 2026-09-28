@@ -1,10 +1,17 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { Image, ScrollView, Switch, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Image,
+  ScrollView,
+  Switch,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
-import { MenuItem } from '@/components/ui/menu-item';
-import { PROFILE_MENU_ITEMS } from '@/constants/profile-menu';
+import { MenuItem } from '@/src/components/ui/menu-item';
+import { PROFILE_MENU_ITEMS } from '@/src/constants/profile-menu';
 // import { useAuth } from '@/hooks/use-auth';
 
 // TODO: real user data backend/context থেকে আসবে
@@ -19,7 +26,9 @@ export default function ProfileScreen() {
 
   return (
     <ScrollView className="flex-1 bg-white">
-      <Text className="text-center text-lg font-semibold mt-10 mb-6">Profile</Text>
+      <Text className="text-center text-lg font-semibold mt-10 mb-6">
+        Profile
+      </Text>
 
       <View className="items-center mb-6">
         <View className="relative">
@@ -44,7 +53,9 @@ export default function ProfileScreen() {
             key={item.id}
             icon={item.icon}
             label={item.label}
-            onPress={item.route ? () => router.push(item.route as any) : undefined}
+            onPress={
+              item.route ? () => router.push(item.route as any) : undefined
+            }
           />
         ))}
 

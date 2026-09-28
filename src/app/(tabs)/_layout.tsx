@@ -9,7 +9,7 @@ export default function TabLayout() {
         tabBarInactiveTintColor: '#94A3B8',
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: '#FFFFFF',   // 👈 সবসময় সাদা (dark mode-এও)
+          backgroundColor: '#FFFFFF', // 👈 সবসময় সাদা (dark mode-এও)
           borderTopWidth: 1,
           borderTopColor: '#E5E7EB',
         },

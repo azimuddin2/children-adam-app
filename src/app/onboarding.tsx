@@ -63,8 +63,9 @@ export default function Onboarding() {
                 {slides.map((_, i) => (
                   <View
                     key={i}
-                    className={`h-2 rounded-full ${i === page ? 'w-6 bg-orange-500' : 'w-2 bg-gray-200'
-                      }`}
+                    className={`h-2 rounded-full ${
+                      i === page ? 'w-6 bg-orange-500' : 'w-2 bg-gray-200'
+                    }`}
                   />
                 ))}
               </View>
