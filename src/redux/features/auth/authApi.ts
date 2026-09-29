@@ -11,6 +11,14 @@ const authApi = baseApi.injectEndpoints({
       invalidatesTags: ['Auth'],
     }),
 
+    logout: builder.mutation<void, void>({
+      query: () => ({
+        url: '/auth/logout',
+        method: 'PUT',
+      }),
+      invalidatesTags: ['Auth'],
+    }),
+
     forgotPassword: builder.mutation({
       query: (data) => ({
         url: '/auth/forgot-password',
@@ -42,6 +50,7 @@ const authApi = baseApi.injectEndpoints({
 
 export const {
   useLoginMutation,
+  useLogoutMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,
   useChangePasswordMutation,

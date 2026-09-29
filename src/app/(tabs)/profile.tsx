@@ -1,5 +1,8 @@
 import { MenuItem } from '@/components/ui/menu-item';
 import { PROFILE_MENU_ITEMS } from '@/constants/profile-menu';
+import { useLogoutMutation } from '@/redux/features/auth/authApi';
+import { logout, selectCurrentUser } from '@/redux/features/auth/authSlice';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useState } from 'react';
@@ -12,28 +15,37 @@ import {
   View,
 } from 'react-native';
 
-// import { useAuth } from '@/hooks/use-auth';
-
-// TODO: real user data backend/context থেকে আসবে
-const CURRENT_USER = {
-  name: 'Saiid Romeo',
-  avatarUrl: 'https://i.pravatar.cc/150?img=12',
-};
-
 export default function ProfileScreen() {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
-  // const { signOut } = useAuth();
+
+  const dispatch = useAppDispatch();
+  const [logoutApi] = useLogoutMutation();
+
+  const user = useAppSelector(selectCurrentUser);
+
+  const handleSignOut = async () => {
+    try {
+      await logoutApi().unwrap();
+    } catch (error) {
+      console.log('Logout API call failed:', error);
+    } finally {
+      dispatch(logout());
+      router.replace('/login');
+    }
+  };
 
   return (
     <ScrollView className="flex-1 bg-white">
-      <Text className="text-center text-lg font-semibold mt-10 mb-6">
+      <Text className="text-center text-lg font-semibold mt-20 mb-5">
         Profile
       </Text>
 
       <View className="items-center mb-6">
         <View className="relative">
           <Image
-            source={{ uri: CURRENT_USER.avatarUrl }}
+            source={{
+              uri: user?.image || 'https://i.pravatar.cc/150?img=12',
+            }}
             className="w-24 h-24 rounded-full"
           />
           <TouchableOpacity
@@ -44,7 +56,9 @@ export default function ProfileScreen() {
             <Ionicons name="pencil" size={14} color="#374151" />
           </TouchableOpacity>
         </View>
-        <Text className="text-lg font-semibold mt-3">{CURRENT_USER.name}</Text>
+        <Text className="text-lg font-semibold mt-3">
+          {user?.fullName || 'Guest'}
+        </Text>
       </View>
 
       <View className="px-5">
@@ -77,7 +91,7 @@ export default function ProfileScreen() {
           label="Sign Out"
           iconColor="#EF4444"
           labelColor="#EF4444"
-          // onPress={signOut}
+          onPress={handleSignOut}
         />
       </View>
     </ScrollView>

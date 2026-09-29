@@ -3,7 +3,7 @@ import { RootState } from '../../store';
 
 export type TUser = {
   userId: string;
-  name?: string;
+  fullName?: string;
   email: string;
   role: string;
   image?: string;

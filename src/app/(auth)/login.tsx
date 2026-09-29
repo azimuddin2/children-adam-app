@@ -19,10 +19,10 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { toast } from 'sonner-native';
 
+import { SocialLoginButton } from '@/components/ui/social-login-button';
 import { useLoginMutation } from '@/redux/features/auth/authApi';
-import { setUser, TUser } from '@/redux/features/auth/authSlice';
+import { setUser } from '@/redux/features/auth/authSlice';
 import { useAppDispatch } from '@/redux/hooks';
-import { verifyToken } from '@/utils/verifyToken';
 import { LoginFormValues, loginSchema } from '@/validations/login.validation';
 
 export default function LoginScreen() {
@@ -45,32 +45,37 @@ export default function LoginScreen() {
   const onSubmit = async (values: LoginFormValues) => {
     try {
       const response = await login(values).unwrap();
-      const { accessToken, requiresVerification } = response?.data ?? {};
+
+      const { accessToken, user, requiresVerification } = response?.data ?? {};
 
       if (!accessToken) {
-        toast.error('Access token missing from server response.');
+        toast.error('Invalid response from server.');
         return;
       }
 
       if (requiresVerification) {
-        // TODO: navigate to the OTP screen once it exists.
+        dispatch(setUser({ user: null, token: accessToken }));
         toast.info(
           response.message || 'Please verify your account to continue.'
         );
+        router.push('/verify-otp');
         return;
       }
 
-      const user = verifyToken(accessToken) as TUser;
-      dispatch(setUser({ user, token: accessToken }));
+      if (!user) {
+        toast.error('Invalid response from server.');
+        return;
+      }
 
+      dispatch(setUser({ user, token: accessToken }));
       toast.success(response.message || 'Login successful');
       router.replace('/(tabs)');
     } catch (error: any) {
-      toast.error(
+      const message =
         error?.data?.message ||
-          error?.message ||
-          'An unexpected error occurred during login.'
-      );
+        error?.message ||
+        'An unexpected error occurred during login.';
+      toast.error(message);
     }
   };
 
@@ -91,7 +96,7 @@ export default function LoginScreen() {
           style={{ top: insets.top + 12 }}
           resizeMode="contain"
         />
-        <Text className="text-4xl font-bold text-white">Log in</Text>
+        <Text className="text-4xl font-bold text-white">Log In</Text>
       </View>
 
       {/* White form card */}
@@ -102,7 +107,7 @@ export default function LoginScreen() {
         <ScrollView
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
-          contentContainerClassName="px-6 pt-8 pb-10"
+          contentContainerClassName="px-6 pt-8 pb-20"
         >
           {/* Email */}
           <Text className="mb-2 text-base font-medium text-gray-900">
@@ -126,7 +131,7 @@ export default function LoginScreen() {
             )}
           />
           {errors.email && (
-            <Text className="mt-1 text-xs text-red-500">
+            <Text className="mt-1 text-sm text-red-500">
               {errors.email.message}
             </Text>
           )}
@@ -168,7 +173,7 @@ export default function LoginScreen() {
             </TouchableOpacity>
           </View>
           {errors.password && (
-            <Text className="mt-1 text-xs text-red-500">
+            <Text className="mt-1 text-sm text-red-500">
               {errors.password.message}
             </Text>
           )}
@@ -195,7 +200,7 @@ export default function LoginScreen() {
 
             <TouchableOpacity
               onPress={() => {
-                // TODO: router.push('/forgot-password') once the screen exists
+                router.push('/forgot-password');
               }}
             >
               <Text className="text-xs text-gray-900">Forgot password ?</Text>
@@ -211,7 +216,7 @@ export default function LoginScreen() {
             {isSubmitting ? (
               <ActivityIndicator color="#FFFFFF" />
             ) : (
-              <Text className="text-base font-medium text-white">Log in</Text>
+              <Text className="text-base font-medium text-white">Log In</Text>
             )}
           </TouchableOpacity>
 
@@ -223,45 +228,15 @@ export default function LoginScreen() {
           </View>
 
           {/* Social buttons */}
-          <TouchableOpacity
-            onPress={() => {
-              // TODO: Apple sign-in
-            }}
-            className="mb-3 flex-row items-center justify-center gap-2 rounded-full border border-gray-200 py-4"
-          >
-            <View className="flex-row items-center justify-center">
-              <Image source={require('@/assets/images/apple.png')} />
-              <Text className="text-sm text-gray-900">Login with apple</Text>
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => {
-              // TODO: Google sign-in
-            }}
-            className="flex-row items-center justify-center gap-2 rounded-full border border-gray-200 py-4"
-          >
-            <View className="flex-row items-center justify-center">
-              <Image
-                source={require('@/assets/images/google.png')}
-                className="h-5 w-5"
-              />
-              <Text className="ml-2 text-sm text-gray-900">
-                Login with Google
-              </Text>
-            </View>
-          </TouchableOpacity>
+          <SocialLoginButton provider="apple" />
+          <SocialLoginButton provider="google" />
 
           {/* Bottom text */}
           <View className="mt-6 flex-row items-center justify-center gap-1">
             <Text className="text-sm text-gray-700">
-              Do you have an account?
+              Don't have an account?
             </Text>
-            <TouchableOpacity
-              onPress={() => {
-                // TODO: navigate to register screen
-              }}
-            >
+            <TouchableOpacity onPress={() => router.push('/signup')}>
               <Text className="text-sm font-semibold text-sky-500">
                 Sign Up
               </Text>

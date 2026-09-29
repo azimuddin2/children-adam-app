@@ -3,6 +3,14 @@ import { IUser, TResponse } from '@/types';
 
 const userApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    signUp: builder.mutation({
+      query: (userInfo) => ({
+        url: '/users/signup',
+        method: 'POST',
+        body: userInfo,
+      }),
+    }),
+
     getUserProfile: builder.query<TResponse<IUser>, string>({
       query: (email) => ({
         url: `/users/profile/${email}`,
@@ -59,6 +67,7 @@ const userApi = baseApi.injectEndpoints({
 });
 
 export const {
+  useSignUpMutation,
   useGetUserProfileQuery,
   useUpdateUserProfileMutation,
   useGetUserByIdQuery,
