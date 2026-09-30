@@ -59,11 +59,10 @@ export default function SignUpScreen() {
         return;
       }
 
-      // user এখনও verify হয়নি, শুধু token সেভ করছি
       dispatch(setUser({ user: null, token: accessToken }));
 
-      toast.success(response.message || 'Signup successful');
-      router.push('/verify-otp');
+      toast.success(response.message || 'Sign Up successful');
+      router.push('/account-verify-otp');
     } catch (error: any) {
       const message =
         error?.data?.message ||
@@ -123,9 +122,9 @@ export default function SignUpScreen() {
               />
             )}
           />
-          {errors.email && (
+          {errors.fullName && (
             <Text className="mt-1 text-sm text-red-500">
-              {errors.email.message}
+              {errors.fullName.message}
             </Text>
           )}
 
@@ -198,7 +197,7 @@ export default function SignUpScreen() {
             </Text>
           )}
 
-          {/* Log in button */}
+          {/* Sign in button */}
           <TouchableOpacity
             onPress={handleSubmit(onSubmit)}
             disabled={isSubmitting}

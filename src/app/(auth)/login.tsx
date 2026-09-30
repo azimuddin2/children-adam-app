@@ -58,7 +58,7 @@ export default function LoginScreen() {
         toast.info(
           response.message || 'Please verify your account to continue.'
         );
-        router.push('/verify-otp');
+        router.push('/account-verify-otp');
         return;
       }
 

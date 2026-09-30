@@ -13,7 +13,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { toast } from 'sonner-native';
 
-import { selectCurrentToken } from '@/redux/features/auth/authSlice';
+import { logout, selectCurrentToken } from '@/redux/features/auth/authSlice';
 import {
   useResendOtpMutation,
   useVerifyOtpMutation,
@@ -22,14 +22,15 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { verifyToken } from '@/utils/verifyToken';
 
 const OTP_LENGTH = 6;
+const EMPTY_OTP = Array(OTP_LENGTH).fill('');
 
-export default function VerifyOtpScreen() {
+export default function AccountVerifyOtpScreen() {
   const insets = useSafeAreaInsets();
   const dispatch = useAppDispatch();
   const token = useAppSelector(selectCurrentToken);
   const email = token ? verifyToken(token)?.email : undefined;
 
-  const [digits, setDigits] = useState<string[]>(Array(OTP_LENGTH).fill(''));
+  const [digits, setDigits] = useState<string[]>(EMPTY_OTP);
   const inputsRef = useRef<Array<TextInput | null>>([]);
 
   const [verifyOtp, { isLoading: isVerifying }] = useVerifyOtpMutation();
@@ -37,6 +38,11 @@ export default function VerifyOtpScreen() {
 
   const otp = digits.join('');
   const isComplete = otp.length === OTP_LENGTH;
+
+  const resetOtpInput = () => {
+    setDigits(EMPTY_OTP);
+    inputsRef.current[0]?.focus();
+  };
 
   const handleChangeDigit = (value: string, index: number) => {
     const clean = value.replace(/[^0-9]/g, '');
@@ -59,22 +65,25 @@ export default function VerifyOtpScreen() {
   const handleVerify = async () => {
     try {
       const response = await verifyOtp({ otp }).unwrap();
+      toast.success(response.message || 'Verified successfully');
 
-      toast.success(response.message || 'Account verified. Please log in.');
+      dispatch(logout());
       router.replace('/login');
     } catch (error: any) {
       toast.error(error?.data?.message || 'Invalid or expired OTP.');
+      resetOtpInput();
     }
   };
 
   const handleResend = async () => {
     if (!email) {
-      toast.error('Unable to find your email. Please sign up again.');
+      toast.error('Unable to find your email. Please login again.');
       return;
     }
 
     try {
       await resendOtp(email).unwrap();
+      resetOtpInput();
       toast.success('OTP resent to your email');
     } catch (error: any) {
       toast.error(error?.data?.message || 'Failed to resend OTP');
@@ -161,7 +170,9 @@ export default function VerifyOtpScreen() {
         <TouchableOpacity
           onPress={handleVerify}
           disabled={!isComplete || isVerifying}
-          className="mt-8 w-full items-center rounded-full bg-orange-500 py-4"
+          className={`mt-8 w-full items-center rounded-full py-4 ${
+            isComplete ? 'bg-orange-500' : 'bg-orange-200'
+          }`}
         >
           {isVerifying ? (
             <ActivityIndicator color="#FFFFFF" />
