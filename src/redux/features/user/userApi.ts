@@ -11,24 +11,35 @@ const userApi = baseApi.injectEndpoints({
       }),
     }),
 
-    getUserProfile: builder.query<TResponse<IUser>, string>({
-      query: (email) => ({
-        url: `/users/profile/${email}`,
+    getUserProfile: builder.query<TResponse<IUser>, void>({
+      query: () => ({
+        url: `/users/profile`,
         method: 'GET',
         credentials: 'include',
       }),
       providesTags: ['User'],
     }),
 
-    updateUserProfile: builder.mutation<
-      TResponse<IUser>,
-      { email: string; body: FormData }
-    >({
-      query: ({ email, body }) => ({
-        url: `/users/profile/${email}`,
+    updateUserProfile: builder.mutation<TResponse<IUser>, { body: FormData }>({
+      query: ({ body }) => ({
+        url: `/users/profile`,
         method: 'PATCH',
         body,
         credentials: 'include',
+      }),
+      invalidatesTags: ['User'],
+    }),
+
+    updateUserPicture: builder.mutation<
+      TResponse<IUser>,
+      FormData // { body: FormData } না দিয়ে সরাসরি FormData অবজেক্ট দিন
+    >({
+      query: (formData) => ({
+        url: `/users/profile/picture`,
+        method: 'PATCH',
+        body: formData,
+        credentials: 'include',
+        // React Native FormData-র জন্য Header Browser নিজে সামলায়, তবে explicit Content-Type দেবেন না
       }),
       invalidatesTags: ['User'],
     }),
@@ -70,6 +81,7 @@ export const {
   useSignUpMutation,
   useGetUserProfileQuery,
   useUpdateUserProfileMutation,
+  useUpdateUserPictureMutation,
   useGetUserByIdQuery,
   useUpdateNotificationSettingsMutation,
   useDeleteUserAccountMutation,
