@@ -27,12 +27,11 @@ export const PROFILE_MENU_ITEMS: ProfileMenuItem[] = [
     label: 'Settings',
     route: '/settings',
   },
-  // Notification আলাদা handle হবে (toggle থাকায়)
   {
-    id: 'contact',
+    id: 'contact-us',
     icon: 'document-text-outline',
     label: 'Contact Us',
-    route: '/contact',
+    route: '/contact-us',
   },
   {
     id: 'about',

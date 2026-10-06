@@ -26,20 +26,19 @@ const userApi = baseApi.injectEndpoints({
         method: 'PATCH',
         body,
         credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
       }),
       invalidatesTags: ['User'],
     }),
 
-    updateUserPicture: builder.mutation<
-      TResponse<IUser>,
-      FormData // { body: FormData } না দিয়ে সরাসরি FormData অবজেক্ট দিন
-    >({
+    updateUserPicture: builder.mutation<TResponse<IUser>, FormData>({
       query: (formData) => ({
         url: `/users/profile/picture`,
         method: 'PATCH',
         body: formData,
         credentials: 'include',
-        // React Native FormData-র জন্য Header Browser নিজে সামলায়, তবে explicit Content-Type দেবেন না
       }),
       invalidatesTags: ['User'],
     }),

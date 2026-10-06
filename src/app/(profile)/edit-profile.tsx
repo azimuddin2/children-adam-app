@@ -142,7 +142,6 @@ export default function EditProfileScreen() {
           <Text className="mb-2 mt-5 text-base font-semibold text-gray-900">
             Gender
           </Text>
-
           <Controller
             control={control}
             name="gender"
