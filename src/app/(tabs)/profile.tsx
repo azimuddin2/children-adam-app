@@ -29,6 +29,17 @@ export default function ProfileScreen() {
 
   const user = useAppSelector(selectCurrentUser);
 
+  const handleSignOut = async () => {
+    try {
+      await logoutApi().unwrap();
+    } catch (error) {
+      console.log('Logout API call failed:', error);
+    } finally {
+      dispatch(logout());
+      router.replace('/login');
+    }
+  };
+
   const handleChangePicture = async () => {
     try {
       const result = await ImagePicker.launchImageLibraryAsync({
@@ -74,17 +85,6 @@ export default function ProfileScreen() {
     }
   };
 
-  const handleSignOut = async () => {
-    try {
-      await logoutApi().unwrap();
-    } catch (error) {
-      console.log('Logout API call failed:', error);
-    } finally {
-      dispatch(logout());
-      router.replace('/login');
-    }
-  };
-
   return (
     <ScrollView className="flex-1 bg-white">
       <Text className="text-center text-lg font-semibold mt-20 mb-5">
@@ -110,7 +110,6 @@ export default function ProfileScreen() {
             className="absolute bottom-0 right-0 bg-white rounded-full p-1.5 border border-gray-200"
             onPress={handleChangePicture}
             disabled={isUploadingPicture}
-            activeOpacity={0}
             accessibilityLabel="Change profile picture"
           >
             <Ionicons name="camera" size={14} color="#374151" />
@@ -118,9 +117,6 @@ export default function ProfileScreen() {
         </View>
         <Text className="text-lg font-semibold mt-3">
           {user?.fullName || 'Guest'}
-        </Text>
-        <Text className="text-sm font-semibold mt-1 text-gray-600">
-          {user?.email || 'Guest'}
         </Text>
       </View>
 
