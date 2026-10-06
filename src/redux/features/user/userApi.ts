@@ -26,20 +26,21 @@ const userApi = baseApi.injectEndpoints({
         method: 'PATCH',
         body,
         credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
       }),
       invalidatesTags: ['User'],
     }),
 
-    updateUserPicture: builder.mutation<TResponse<IUser>, FormData>({
+    updateUserPicture: builder.mutation<
+      TResponse<IUser>,
+      FormData
+    >({
       query: (formData) => ({
         url: `/users/profile/picture`,
         method: 'PATCH',
         body: formData,
         credentials: 'include',
       }),
+
       invalidatesTags: ['User'],
     }),
 
