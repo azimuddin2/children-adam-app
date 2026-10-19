@@ -26,6 +26,9 @@ const userApi = baseApi.injectEndpoints({
         method: 'PATCH',
         body,
         credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
       }),
       invalidatesTags: ['User'],
     }),
@@ -37,7 +40,6 @@ const userApi = baseApi.injectEndpoints({
         body: formData,
         credentials: 'include',
       }),
-
       invalidatesTags: ['User'],
     }),
 
