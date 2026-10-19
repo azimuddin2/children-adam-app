@@ -63,6 +63,7 @@ export function SocialLoginButton({ provider }: SocialLoginButtonProps) {
   return (
     <TouchableOpacity
       onPress={handlePress}
+      activeOpacity={1}
       className="mb-3 flex-row items-center justify-center gap-2 rounded-full border border-gray-200 py-4"
     >
       <Image source={icon} className="h-5 w-5" resizeMode="contain" />

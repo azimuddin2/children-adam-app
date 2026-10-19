@@ -126,6 +126,7 @@ export default function Onboarding() {
       {!isLast && (
         <TouchableOpacity
           onPress={finishOnboarding}
+          activeOpacity={1}
           className="absolute right-6 bg-black/30 px-4 py-1.5 rounded-full"
           style={{ top: insets.top + 12 }}
         >
@@ -136,6 +137,7 @@ export default function Onboarding() {
       {/* Bottom button */}
       <TouchableOpacity
         onPress={handleNext}
+        activeOpacity={1}
         className="absolute left-6 right-6 bg-orange-500 rounded-full py-4 items-center"
         style={{ bottom: insets.bottom + 24 }}
       >

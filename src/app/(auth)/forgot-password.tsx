@@ -83,6 +83,7 @@ export default function ForgotPasswordScreen() {
 
         <TouchableOpacity
           onPress={() => router.back()}
+          activeOpacity={1}
           className="absolute left-6 h-9 w-9 items-center justify-center rounded-full bg-white"
           style={{ top: insets.top + 16 }}
         >
@@ -144,6 +145,7 @@ export default function ForgotPasswordScreen() {
 
           <TouchableOpacity
             onPress={handleSubmit(onSubmit)}
+            activeOpacity={1}
             disabled={isSubmitting}
             className="mt-8 items-center rounded-full bg-orange-500 py-4"
           >
@@ -160,7 +162,10 @@ export default function ForgotPasswordScreen() {
             <Text className="text-sm text-gray-700">
               Remember your password?
             </Text>
-            <TouchableOpacity onPress={() => router.replace('/login')}>
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={() => router.replace('/login')}
+            >
               <Text className="text-sm font-semibold text-sky-500">Log In</Text>
             </TouchableOpacity>
           </View>

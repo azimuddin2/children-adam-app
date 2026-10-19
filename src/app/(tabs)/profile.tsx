@@ -107,6 +107,7 @@ export default function ProfileScreen() {
           )}
 
           <TouchableOpacity
+            activeOpacity={1}
             className="absolute bottom-0 right-0 bg-white rounded-full p-1.5 border border-gray-200"
             onPress={handleChangePicture}
             disabled={isUploadingPicture}

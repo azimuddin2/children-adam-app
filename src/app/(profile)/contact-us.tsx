@@ -65,6 +65,7 @@ export default function ContactUsScreen() {
       >
         <TouchableOpacity
           onPress={() => router.back()}
+          activeOpacity={1}
           className="absolute left-6 h-9 w-9 items-center justify-center rounded-full bg-gray-100"
           style={{ top: insets.top + 12 }}
         >
@@ -271,6 +272,7 @@ export default function ContactUsScreen() {
           <TouchableOpacity
             onPress={handleSubmit(onSubmit)}
             disabled={isSubmitting}
+            activeOpacity={1}
             className="mt-6 items-center rounded-full bg-orange-500 py-4"
           >
             {isSubmitting ? (

@@ -25,10 +25,11 @@ export function MenuItem({
     <TouchableOpacity
       onPress={onPress}
       disabled={!onPress && !rightElement}
+      activeOpacity={1}
       testID={testID}
       accessibilityRole="button"
       accessibilityLabel={label}
-      className="flex-row items-center justify-between py-4 border-b border-gray-100"
+      className="flex-row items-center justify-between py-4 border-b border-gray-100 cursor-pointer"
     >
       <View className="flex-row items-center gap-3">
         <Ionicons name={icon} size={20} color={iconColor} />

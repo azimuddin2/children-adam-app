@@ -94,6 +94,7 @@ export default function ResetPasswordScreen() {
 
         <TouchableOpacity
           onPress={() => router.back()}
+          activeOpacity={1}
           className="absolute left-6 h-9 w-9 items-center justify-center rounded-full bg-white"
           style={{ top: insets.top + 16 }}
         >
@@ -150,6 +151,7 @@ export default function ResetPasswordScreen() {
             />
             <TouchableOpacity
               onPress={() => setShowPassword((prev) => !prev)}
+              activeOpacity={1}
               className="absolute right-4 top-0 h-full justify-center"
               accessibilityLabel={
                 showPassword ? 'Hide password' : 'Show password'
@@ -192,6 +194,7 @@ export default function ResetPasswordScreen() {
             />
             <TouchableOpacity
               onPress={() => setShowConfirmPassword((prev) => !prev)}
+              activeOpacity={1}
               className="absolute right-4 top-0 h-full justify-center"
               accessibilityLabel={
                 showConfirmPassword ? 'Hide password' : 'Show password'
@@ -212,6 +215,7 @@ export default function ResetPasswordScreen() {
 
           <TouchableOpacity
             onPress={handleSubmit(onSubmit)}
+            activeOpacity={1}
             disabled={isSubmitting}
             className="mt-8 items-center rounded-full bg-orange-500 py-4"
           >
@@ -228,7 +232,10 @@ export default function ResetPasswordScreen() {
             <Text className="text-sm text-gray-700">
               Remember your password?
             </Text>
-            <TouchableOpacity onPress={() => router.replace('/login')}>
+            <TouchableOpacity
+              onPress={() => router.replace('/login')}
+              activeOpacity={1}
+            >
               <Text className="text-sm font-semibold text-sky-500">Log In</Text>
             </TouchableOpacity>
           </View>

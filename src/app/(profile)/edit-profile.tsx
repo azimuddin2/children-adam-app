@@ -94,6 +94,7 @@ export default function EditProfileScreen() {
       >
         <TouchableOpacity
           onPress={() => router.back()}
+          activeOpacity={1}
           className="absolute left-6 h-9 w-9 items-center justify-center rounded-full bg-gray-100"
           style={{ top: insets.top + 12 }}
         >
@@ -150,6 +151,7 @@ export default function EditProfileScreen() {
               <View>
                 <TouchableOpacity
                   onPress={() => setGenderModalVisible(!genderModalVisible)}
+                  activeOpacity={1}
                   className="flex-row items-center justify-between rounded-xl border border-gray-200 px-4 py-4"
                 >
                   <Text className="text-sm text-gray-900">
@@ -172,6 +174,7 @@ export default function EditProfileScreen() {
                       return (
                         <TouchableOpacity
                           key={option.value}
+                          activeOpacity={1}
                           onPress={() => {
                             onChange(option.value);
                             setGenderModalVisible(false);
@@ -266,6 +269,7 @@ export default function EditProfileScreen() {
           <TouchableOpacity
             onPress={handleSubmit(onSubmit)}
             disabled={isSubmitting}
+            activeOpacity={1}
             className="mt-10 items-center rounded-full bg-orange-500 py-4"
           >
             {isSubmitting ? (

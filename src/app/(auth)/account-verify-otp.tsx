@@ -110,6 +110,7 @@ export default function AccountVerifyOtpScreen() {
 
         <TouchableOpacity
           onPress={() => router.back()}
+          activeOpacity={1}
           className="absolute left-6 h-9 w-9 items-center justify-center rounded-full bg-white"
           style={{ top: insets.top + 16 }}
         >
@@ -155,6 +156,7 @@ export default function AccountVerifyOtpScreen() {
         {/* Resend */}
         <TouchableOpacity
           onPress={handleResend}
+          activeOpacity={1}
           disabled={isResending}
           className="mt-4"
         >
@@ -169,6 +171,7 @@ export default function AccountVerifyOtpScreen() {
         {/* Continue button */}
         <TouchableOpacity
           onPress={handleVerify}
+          activeOpacity={1}
           disabled={!isComplete || isVerifying}
           className={`mt-8 w-full items-center rounded-full py-4 ${
             isComplete ? 'bg-orange-500' : 'bg-orange-200'

@@ -5,7 +5,6 @@ import { router } from 'expo-router';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import {
-  ActivityIndicator,
   Image,
   KeyboardAvoidingView,
   Platform,
@@ -24,6 +23,7 @@ import { useLoginMutation } from '@/redux/features/auth/authApi';
 import { setUser } from '@/redux/features/auth/authSlice';
 import { useAppDispatch } from '@/redux/hooks';
 import { LoginFormValues, loginSchema } from '@/validations/login.validation';
+import { AppButton } from '@/components/ui/app-button';
 
 export default function LoginScreen() {
   const insets = useSafeAreaInsets();
@@ -160,6 +160,7 @@ export default function LoginScreen() {
             />
             <TouchableOpacity
               onPress={() => setShowPassword((prev) => !prev)}
+              activeOpacity={1}
               className="absolute right-4 top-0 h-full justify-center"
               accessibilityLabel={
                 showPassword ? 'Hide password' : 'Show password'
@@ -182,6 +183,7 @@ export default function LoginScreen() {
           <View className="mt-4 flex-row items-center justify-between">
             <TouchableOpacity
               onPress={() => setKeepLoggedIn((prev) => !prev)}
+              activeOpacity={1}
               className="flex-row items-center gap-2"
               accessibilityRole="checkbox"
               accessibilityState={{ checked: keepLoggedIn }}
@@ -202,23 +204,19 @@ export default function LoginScreen() {
               onPress={() => {
                 router.push('/forgot-password');
               }}
+              activeOpacity={1}
             >
-              <Text className="text-xs text-gray-900">Forgot password ?</Text>
+              <Text className="text-sm text-gray-900">Forgot password ?</Text>
             </TouchableOpacity>
           </View>
 
           {/* Log in button */}
-          <TouchableOpacity
+          <AppButton
+            label="Log In"
             onPress={handleSubmit(onSubmit)}
-            disabled={isSubmitting}
-            className="mt-6 items-center rounded-full bg-orange-500 py-4"
-          >
-            {isSubmitting ? (
-              <ActivityIndicator color="#FFFFFF" />
-            ) : (
-              <Text className="text-base font-medium text-white">Log In</Text>
-            )}
-          </TouchableOpacity>
+            loading={isSubmitting}
+            className="mt-6"
+          />
 
           {/* Divider */}
           <View className="my-6 flex-row items-center gap-3">
@@ -236,7 +234,10 @@ export default function LoginScreen() {
             <Text className="text-sm text-gray-700">
               Don't have an account?
             </Text>
-            <TouchableOpacity onPress={() => router.push('/signup')}>
+            <TouchableOpacity
+              onPress={() => router.push('/signup')}
+              activeOpacity={1}
+            >
               <Text className="text-sm font-semibold text-sky-500">
                 Sign Up
               </Text>

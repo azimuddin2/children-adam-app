@@ -109,6 +109,7 @@ export default function PhoneInput({
     <View className="flex-row items-center rounded-xl border border-gray-200 bg-white">
       <TouchableOpacity
         onPress={() => setVisible(true)}
+        activeOpacity={1}
         className="flex-row items-center border-r border-gray-200 px-3 py-4"
       >
         <Text className="text-base">{countryCodeToFlag(countryCode)}</Text>
@@ -139,7 +140,10 @@ export default function PhoneInput({
         <View className="flex-1 bg-white pt-14 px-4">
           <View className="flex-row items-center justify-between mb-4">
             <Text className="text-lg font-semibold">Select Country</Text>
-            <TouchableOpacity onPress={() => setVisible(false)}>
+            <TouchableOpacity
+              onPress={() => setVisible(false)}
+              activeOpacity={1}
+            >
               <Ionicons
                 name="close"
                 size={20}
@@ -163,6 +167,7 @@ export default function PhoneInput({
             renderItem={({ item }) => (
               <TouchableOpacity
                 onPress={() => handleSelectCountry(item)}
+                activeOpacity={1}
                 className="flex-row items-center py-3 border-b border-gray-100"
               >
                 <Text className="text-lg mr-3">{countryCodeToFlag(item)}</Text>

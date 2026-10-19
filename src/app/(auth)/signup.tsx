@@ -179,6 +179,7 @@ export default function SignUpScreen() {
             />
             <TouchableOpacity
               onPress={() => setShowPassword((prev) => !prev)}
+              activeOpacity={1}
               className="absolute right-4 top-0 h-full justify-center"
               accessibilityLabel={
                 showPassword ? 'Hide password' : 'Show password'
@@ -200,6 +201,7 @@ export default function SignUpScreen() {
           {/* Sign in button */}
           <TouchableOpacity
             onPress={handleSubmit(onSubmit)}
+            activeOpacity={1}
             disabled={isSubmitting}
             className="mt-6 items-center rounded-full bg-orange-500 py-4"
           >
@@ -226,7 +228,10 @@ export default function SignUpScreen() {
             <Text className="text-sm text-gray-700">
               Already have an account?
             </Text>
-            <TouchableOpacity onPress={() => router.push('/login')}>
+            <TouchableOpacity
+              onPress={() => router.push('/login')}
+              activeOpacity={1}
+            >
               <Text className="text-sm font-semibold text-sky-500">Log In</Text>
             </TouchableOpacity>
           </View>

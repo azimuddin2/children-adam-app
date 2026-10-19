@@ -37,7 +37,7 @@ export const PROFILE_MENU_ITEMS: ProfileMenuItem[] = [
     id: 'about',
     icon: 'information-circle-outline',
     label: 'About Us',
-    route: '/about',
+    route: '/about-us',
   },
   {
     id: 'privacy',
